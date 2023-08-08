@@ -5,11 +5,7 @@ function CourseCard({ course }) {
         <img src={course.imageUrl} alt={course.title} />
       </div>
       <div className="course-item__detail">
-        <CourseCardBody
-          description={course.description}
-          title={course.title}
-          rate={course.rate}
-        />
+        <CourseCardBody course={course} />
         <CourseCardFooter course={course} />
       </div>
     </div>
@@ -18,20 +14,19 @@ function CourseCard({ course }) {
 
 export default CourseCard;
 
-function CourseCardBody({ title, description, rate }) {
+function CourseCardBody({ course }) {
   return (
     <div className="course-item__body">
       <div>
-        <p className="title">{title}</p>
-        <p className="desc"> {description}</p>
+        <p className="title">{course.title}</p>
+        <p className="desc">{course.description}</p>
       </div>
-      <span className="rate"> ⭐️ {rate} </span>
+      <span className="rate">⭐ {course.rate}</span>
     </div>
   );
 }
 
 function CourseCardFooter({ course }) {
-
   const startedAt = new Date(course.start).toLocaleDateString("en-US", {
     month: "short",
     year: "numeric",
@@ -41,11 +36,13 @@ function CourseCardFooter({ course }) {
   return (
     <div className="course-item__footer">
       <div className="tags">
-        {course.tags.map((t) => (
-          <span key={t} className="badge badge--secondary">
-            React.js
-          </span>
-        ))}
+        {course.tags.map((t) => {
+          return (
+            <span key={t} className="badge badge--secondary">
+              {course.tags}
+            </span>
+          );
+        })}
       </div>
       <div className="caption">
         <div className="date">{startedAt}</div>
